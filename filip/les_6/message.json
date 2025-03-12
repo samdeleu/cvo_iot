@@ -1,0 +1,10 @@
+{{"name": "esp_ldr_sensor_sam-ldr0 0", "state_topic": "home/esp_ldr_sensor_sam/state", "unit_of_measurement": "%", "value_template": "{{ value_json.{tag_name} }}", "origin": {"name": "esp32_sam"}, "device": {"manufacturer": "SamSam", "identifiers": ["esp_ldr_sensor_sam"], "name": "esp_ldr_sensor_sam", "model": "ESP32"}, "unique_id": "ldr0_esp_ldr_sensor_sam_19640927_LDR_0"}
+,
+{"name": "esp_dht11_sensor_sam-temperature 0", "state_topic": "home/esp_dht11_sensor_sam/state", "unit_of_measurement": "C", "value_template": "{{ value_json.{tag_name} }}", "origin": {"name": "esp32_sam"}, "device": {"manufacturer": "SamSam", "identifiers": ["esp_dht11_sensor_sam"], "name": "esp_dht11_sensor_sam", "model": "ESP32"}, "unique_id": "temperature_esp_dht11_sensor_sam_19640927_DHT11_0"}
+,
+{"name": "esp_ldr_sensor_sam-ldr0 0", "state_topic": "home/esp_ldr_sensor_sam/state", "unit_of_measurement": "%", "value_template": "{{ value_json.{tag_name} }}", "origin": {"name": "esp32_sam"}, "device": {"manufacturer": "SamSam", "identifiers": ["esp_ldr_sensor_sam"], "name": "esp_ldr_sensor_sam", "model": "ESP32"}, "unique_id": "ldr0_esp_ldr_sensor_sam_19640927_LDR_0"}
+,
+{"name": "esp_dht11_sensor_sam-humidity 0", "state_topic": "home/esp_dht11_sensor_sam/state", "unit_of_measurement": "%", "value_template": "{{ value_json.{tag_name} }}", "origin": {"name": "esp32_sam"}, "device": {"manufacturer": "SamSam", "identifiers": ["esp_dht11_sensor_sam"], "name": "esp_dht11_sensor_sam", "model": "ESP32"}, "unique_id": "humidity_esp_dht11_sensor_sam_19640927_DHT11_0"}
+,
+{"name": "esp_dht11_sensor_sam-temperature 0", "state_topic": "home/esp_dht11_sensor_sam/state", "unit_of_measurement": "C", "value_template": "{{ value_json.{tag_name} }}", "origin": {"name": "esp32_sam"}, "device": {"manufacturer": "SamSam", "identifiers": ["esp_dht11_sensor_sam"], "name": "esp_dht11_sensor_sam", "model": "ESP32"}, "unique_id": "temperature_esp_dht11_sensor_sam_19640927_DHT11_0"}
+}
