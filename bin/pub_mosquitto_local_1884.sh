@@ -4,7 +4,7 @@ MQTT_HOST="192.168.0.192"
 MQTT_PORT=1884
 MQTT_USER="samsam"
 MQTT_PW="H3tCv0.be"
-TOPIC="samsam"
+TOPIC="home"
 
 while true
 do

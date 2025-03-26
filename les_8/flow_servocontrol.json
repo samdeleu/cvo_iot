@@ -1,0 +1,152 @@
+[
+    {
+        "id": "ca1acad6379d435d",
+        "type": "ui_button",
+        "z": "780420f60a746616",
+        "name": "",
+        "group": "fb0730b21af4d9ab",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Dicht",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "0",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "6d1db2fb3f07fc72"
+            ]
+        ]
+    },
+    {
+        "id": "c2be3f3d16384feb",
+        "type": "ui_button",
+        "z": "780420f60a746616",
+        "name": "",
+        "group": "fb0730b21af4d9ab",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "half open",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "90",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "6d1db2fb3f07fc72"
+            ]
+        ]
+    },
+    {
+        "id": "d9296ce46ce203a4",
+        "type": "ui_button",
+        "z": "780420f60a746616",
+        "name": "",
+        "group": "fb0730b21af4d9ab",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Open",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "180",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "6d1db2fb3f07fc72"
+            ]
+        ]
+    },
+    {
+        "id": "04ae65262f38ccb1",
+        "type": "ui_slider",
+        "z": "780420f60a746616",
+        "name": "",
+        "label": "Controller",
+        "tooltip": "",
+        "group": "fb0730b21af4d9ab",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "180",
+        "step": 1,
+        "className": "",
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "6d1db2fb3f07fc72"
+            ]
+        ]
+    },
+    {
+        "id": "6d1db2fb3f07fc72",
+        "type": "tcp request",
+        "z": "780420f60a746616",
+        "name": "",
+        "server": "192.168.0.183",
+        "port": "7888",
+        "out": "time",
+        "ret": "buffer",
+        "splitc": "500",
+        "newline": "",
+        "trim": false,
+        "tls": "",
+        "x": 350,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb0730b21af4d9ab",
+        "type": "ui_group",
+        "name": "Control",
+        "tab": "e38a077e38e2dc52",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e38a077e38e2dc52",
+        "type": "ui_tab",
+        "name": "Servo",
+        "icon": "dashboard",
+        "order": 14,
+        "disabled": false,
+        "hidden": false
+    }
+]
