@@ -36,7 +36,7 @@ DHT11_DEV_NAME = "sam_dht11"
 DHT11_SENSOR_ID = "19640927"
 
 POT_DEV_NAME = "sam_pot"
-POT_DEV_ID = "19640927"
+POT_SENSOR_ID = "19640927"
 
 # Definitie van de LDR sensor
 ldr = ADC(Pin(36))
@@ -105,14 +105,13 @@ def handle_ldr(dev_name, tag_name, unit):
         f"{tag_name}": round(val_percent, 2)
     }
     print(f"   __ waarde {tag_name}: {val_percent}")
-    oled.text(f"{val_percent:}{unit}", 0, 0, 1)
+    oled.text(f"Light: {val_percent:.1f}{unit}", 0, 0, 1)
     oled.hline(0, 8, 127, 1)
     if val_percent < 20:
         oled.text(f"<20 -> ON", 0, 12, 1)
     elif val_percent > 50:
         oled.text(f">50 -> OFF", 0, 12, 1)
     oled.hline(0, 20, 127, 1)
-    oled.show()
     mqtt.publish(
         f"home/{dev_name}/state",
         json.dumps(payload).encode()
@@ -128,14 +127,15 @@ def handle_dht11(dev_name):
         "humidity": hum,
     }
     print(f"   __ payload: {payload}")
-    oled.text(f"{val_percent}{unit}", 0, 0, 1)
-    oled.hline(0, 8, 127, 1)
+    oled.text(f"Hum  : {hum:.2f}", 0,24, 1)
+    oled.text(f"Temp : {temp:.2f}", 0,32, 1)
+    oled.hline(0, 40, 127, 1)
     mqtt.publish(
         f"home/{dev_name}/state",
         json.dumps(payload).encode()
     )
 
-def handle_pot(dev_name, tag_name, unit):
+def handle_pot(dev_name):
     """ lees de waarde van de potmeters en publiceer de data """
     val_1 = 100 * pot_1.read() // 4096
     val_2 = 100 * pot_2.read() // 4096
@@ -144,10 +144,9 @@ def handle_pot(dev_name, tag_name, unit):
         "pot_twee": val_2,
     }
     print(f"   __ payload: {payload}")
-    oled.text(f"{val_percent:}{unit}", 0, 0, 1)
-    oled.hline(0, 21, 127, 1)
-    oled.hline(0, 30, 127, 1)
-    oled.show()
+    oled.text(f"Pot 1: {val_1:.2f}", 0,44, 1)
+    oled.text(f"Pot 2: {val_2:.2f}", 0,52, 1)
+    oled.hline(0, 44, 127, 1)
     mqtt.publish(
         f"home/{dev_name}/state",
         json.dumps(payload).encode()
@@ -177,13 +176,14 @@ display_status(oled, "OP READY")
 publish_discovery(mqtt, LDR_DEV_NAME, LDR_SENSOR_ID, "ldr", "%")
 publish_discovery(mqtt, DHT11_DEV_NAME, DHT11_SENSOR_ID, "humidity", "%")
 publish_discovery(mqtt, DHT11_DEV_NAME, DHT11_SENSOR_ID, "temperature", "C")
-publish_discovery(mqtt, POT_DEV_NAME, POT_SENSOR_ID, "pot_een", "C")
-publish_discovery(mqtt, POT_DEV_NAME, POT_DEV_NAME, "pot_twee", "C")
+publish_discovery(mqtt, POT_DEV_NAME, POT_SENSOR_ID, "pot_een", "x")
+publish_discovery(mqtt, POT_DEV_NAME, POT_SENSOR_ID, "pot_twee", "y")
 
 while True:
     handle_ldr(LDR_DEV_NAME, "ldr", "%")
     handle_dht11(DHT11_DEV_NAME)
     handle_pot(POT_DEV_NAME)
+    oled.show()
     time.sleep(2)
     oled.fill(0)
     oled.show()
