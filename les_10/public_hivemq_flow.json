@@ -1,0 +1,181 @@
+[
+    {
+        "id": "458a46d988594556",
+        "type": "tab",
+        "label": "HiveMQ Public",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1ab4de36ed3231a6",
+        "type": "mqtt in",
+        "z": "458a46d988594556",
+        "name": "",
+        "topic": "data/cvo/mac",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "a775458782b527f1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "e55134458d260290"
+            ]
+        ]
+    },
+    {
+        "id": "e55134458d260290",
+        "type": "join",
+        "z": "458a46d988594556",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "15",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "aa641ef71de0de5b",
+                "edfbf776e543a22f",
+                "2f6cd7c39e0b7739"
+            ]
+        ]
+    },
+    {
+        "id": "aa641ef71de0de5b",
+        "type": "debug",
+        "z": "458a46d988594556",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "edfbf776e543a22f",
+        "type": "function",
+        "z": "458a46d988594556",
+        "name": "create_array_with_unique_values",
+        "func": "var data = msg.payload;\nvar unique = [data[0]]; //keep unique set of values\n\nfor (var i=0; i<data.length; i++) {\n    for(var j=0; j<unique.length;j++) {\n        if(data[i].espname == unique[j].espname) {\n            break\n        }\n        if(j == (unique.length-1)) {\n            unique.push(data[i]);\n        }\n    }\n}\nmsg.payload = unique\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "b81e2ac54ce92a77"
+            ]
+        ]
+    },
+    {
+        "id": "b81e2ac54ce92a77",
+        "type": "debug",
+        "z": "458a46d988594556",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2f6cd7c39e0b7739",
+        "type": "function",
+        "z": "458a46d988594556",
+        "name": "create_array_with_unique_values_map",
+        "func": "var data = msg.payload;\nlet map = new Map();\n\nfor (var i=0; i<data.length; i++) {\n    map.set(data[i].espname, data[i])\n}\nmsg.payload = Array.from(map.values())\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 360,
+        "wires": [
+            [
+                "7a645a19b227aae9"
+            ]
+        ]
+    },
+    {
+        "id": "7a645a19b227aae9",
+        "type": "debug",
+        "z": "458a46d988594556",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a775458782b527f1",
+        "type": "mqtt-broker",
+        "name": "public-hivemq",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
