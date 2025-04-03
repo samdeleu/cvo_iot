@@ -9,7 +9,7 @@ mqtt = None
 DEV_NAME = "esp32_pot_sensor_filip"
 SENSOR_ID = "080270"
 #potentiometer objecten maken
-P1 = ADC(Pin(36))
+P1 = ADC(Pin(34))
 P1.atten(ADC.ATTN_11DB)
 
 P2 = ADC(Pin(39))

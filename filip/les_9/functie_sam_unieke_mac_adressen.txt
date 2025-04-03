@@ -1,0 +1,9 @@
+var data = msg.payload;
+let map = new Map();
+
+for (var i=0; i<data.length; i++) {
+    map.set(data[i].espname, data[i])
+}
+msg.payload = Array.from(map.values())
+
+return msg;

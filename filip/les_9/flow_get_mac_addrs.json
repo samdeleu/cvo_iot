@@ -1,0 +1,136 @@
+[
+    {
+        "id": "6a58dbe99c9c707c",
+        "type": "mqtt in",
+        "z": "d1ee6c31188993c9",
+        "name": "",
+        "topic": "data/cvo/mac",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c2854cd57d27cad7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "26762b2ea62347aa"
+            ]
+        ]
+    },
+    {
+        "id": "eee816fb569ef06c",
+        "type": "debug",
+        "z": "d1ee6c31188993c9",
+        "name": "debug 33",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "26762b2ea62347aa",
+        "type": "join",
+        "z": "d1ee6c31188993c9",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "30",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 90,
+        "y": 100,
+        "wires": [
+            [
+                "35fd9a255aafac9f"
+            ]
+        ]
+    },
+    {
+        "id": "35fd9a255aafac9f",
+        "type": "function",
+        "z": "d1ee6c31188993c9",
+        "name": "create array unique values",
+        "func": "var data = msg.payload;\nvar unique = [data[0]]; //unique zal de unieke waarden bevatten\nfor (var i=0;i<data.length;i++){\n    for(var j=0;j<unique.length;j++){\n        if(data[i].espname == unique[j].espname){\n            break;//zit al in unique, verlaat lus\n        }\n        if(j == (unique.length-1)){\n            //op einde van unique en niet gevonden in\n            //unique, dus voeg aan unique\n            unique.push(data[i]);\n        }\n    }\n}\nmsg.payload = unique;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "eee816fb569ef06c",
+                "6a7e2189468fabc4"
+            ]
+        ]
+    },
+    {
+        "id": "6a7e2189468fabc4",
+        "type": "file",
+        "z": "d1ee6c31188993c9",
+        "name": "",
+        "filename": "c:\\users\\cvo\\downloads\\macs.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2854cd57d27cad7",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
