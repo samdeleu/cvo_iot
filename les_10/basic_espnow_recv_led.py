@@ -3,6 +3,7 @@ import time
 import json
 import network
 import espnow
+from lib import utils
 
 
 # A WLAN interface must be active to send()/recv()
@@ -15,7 +16,8 @@ espnet.active(True)
 
 # led
 led = Pin(15, Pin.OUT)
-led.on()
+led.off()
+utils.blink(led, 10)
 
 with open("macaddr.json", "r") as f:
     print("Loading addresses...")

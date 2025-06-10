@@ -4,6 +4,7 @@ import time
 import binascii
 import network
 import espnow
+from lib import utils
 
 ESP_NAME="esp_sam1"
 
@@ -17,9 +18,6 @@ print(mac_addrs)
 
 # led
 led = Pin(25, Pin.OUT)
-led.on()
-time.sleep(0.5)
-led.off()
 
 
 # Network
