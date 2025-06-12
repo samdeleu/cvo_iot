@@ -15,7 +15,7 @@ espnet = espnow.ESPNow()
 espnet.active(True)
 
 # led
-led = Pin(15, Pin.OUT)
+led = Pin(25, Pin.OUT)
 led.off()
 utils.blink(led, 10)
 
