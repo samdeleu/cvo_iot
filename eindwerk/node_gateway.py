@@ -42,7 +42,7 @@ class Node:
         async for mac_sender, msg in self.esp_net:
             print(f"++++got -{msg}-")
             if msg:             # msg == None if timeout in recv()
-                print(f"REC: {host}, {msg}")
+                print(f"REC: {mac_sender}, {msg}")
                 # split the binnenkomende boodschap
                 # Deze heeft de vorm
                 # COMMAND:PARAMETER_1:PARAMETER_2:PARAMETER_3:...:PARAMETER_N
