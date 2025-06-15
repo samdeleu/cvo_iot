@@ -1,10 +1,18 @@
 """ Network node """
-import aioespnow  # ESPNow met async support
-import asyncio    # python async
-import binascii
-# import espnow
-import network    # standaard network library
+import aioespnow         # ESPNow met async support
+# import espnow           # standaard espnow library
+import asyncio           # python async
+import binascii          # binary/ascii conversion
+
+from machine import Pin  # hardware
+
+import network           # standaard network library
 import sys
+
+
+# Enkele constanten
+SEND_LED_PIN = 25
+RECEIVE_LED_PIN = 26
 
 
 class Node:
@@ -41,6 +49,10 @@ class Node:
         
         # retries
         self.max_send_tries = 5
+        
+        # Activity LEDs
+        self.led_sending = Pin(SEND_LED_PIN, Pin.OUT)
+        self.led_receiving = Pin(RECEIVE_LED_PIN, Pin.OUT)
 
     #
     # De volgende handlers implementeren het communicatie-protocol tussen de verschillende nodes
@@ -86,6 +98,7 @@ class Node:
         """ Ontvangen van messages en omzetten naar een actie """
         async for mac_sender, msg in self.esp_net:
             print(f"++++got -{msg}-")
+            self.led_receiving.on()
             if msg:             # msg == None if timeout in recv()
                 sender = binascii.hexlify(mac_sender).decode()
                 # split the binnenkomende boodschap
@@ -137,6 +150,7 @@ class Node:
                         if len(err.args) > 1 and err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':
                             esp.add_peer(node_mac_address)
                             esp.send(node_mac_address, f"PONG:IN CATCH")
+            self.led_receiving.off()
 
         print("receive: before sleep")
         await asyncio.sleep(self.receive_delay)
@@ -147,6 +161,7 @@ class Node:
             print("*Sending data...")
             await self.announced_event.wait()  # Blokkeer alle zenders totdat we we gateway hebben
             print("*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+            self.led_sending.on()
             data = "XXXX"
             
             if await self.esp_net.asend(self.gateway_address, f"DATA:{self.my_mac_address}:{data}"):
@@ -154,12 +169,14 @@ class Node:
             else:
                 print(f"Failed sending DATA from {self.my_mac_address} to gateway: {self.gateway_address}")
                 
+            self.led_sending.off()
             await asyncio.sleep(self.data_period)
 
     async def send(self, mac, command, message):
         """ Functie om data proberen te zenden naar een mac address """
         trying_to_send = 0
         success = False
+        self.led_sending.on()
         while trying_to_send < self.max_send_tries:
             try:
                 await self.esp_net.asend(mac, f"{command}:{message}")
@@ -181,6 +198,7 @@ class Node:
                     Print("ERROR: interne buffer overflow, wat nu gedaan?")
                 trying_to_send = trying_to_send + 1
 
+        self.led_sending.off()
         return success
     
     async def start(self, timeout=120):
